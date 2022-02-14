@@ -16,6 +16,7 @@ class Home extends Component {
 
   async componentDidMount() {
     const categories = await getCategories();
+    const shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
     const categoriesMenu = categories.map((categorie) => (
       <label htmlFor={ categorie.id } key={ categorie.name } data-testid="category">
         { categorie.name }
@@ -27,20 +28,20 @@ class Home extends Component {
         />
       </label>));
 
-    this.setState({ categories: categoriesMenu });
+    this.setState({ categories: categoriesMenu, shoppingCart: shoppingCartItems });
   }
 
-  countShoppingCartItens = () => {
-    const { shoppingCart } = this.state;
-    const itemInformation = shoppingCart.reduce((acc, { id, title }) => {
-      if (!acc[id]) {
-        acc[id] = { quantity: 1, title };
-      } else {
-        acc[id].quantity += 1;
-      }
-      return acc;
-    }, {});
-    localStorage.setItem('shoppingCart', JSON.stringify(itemInformation));
+  countShoppingCartItens = (obj) => {
+    let shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
+    if (shoppingCartItems === null) { shoppingCartItems = {}; }
+    // const { shoppingCart } = this.state;
+    const { id, title } = obj;
+    if (!shoppingCartItems[id]) {
+      shoppingCartItems[id] = { quantity: 1, title };
+    } else {
+      shoppingCartItems[id].quantity += 1;
+    }
+    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCartItems));
   }
 
   handleRadio = async ({ target: { id } }) => {
@@ -71,8 +72,8 @@ class Home extends Component {
 
   addToCart = (obj) => {
     this.setState((prevState) => ({
-      shoppingCart: [...prevState.shoppingCart, obj],
-    }), () => this.countShoppingCartItens());
+      shoppingCart: { ...prevState.shoppingCart, obj },
+    }), () => this.countShoppingCartItens(obj));
   }
 
   render() {
