@@ -34,10 +34,9 @@ class Home extends Component {
   countShoppingCartItens = (obj) => {
     let shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
     if (shoppingCartItems === null) { shoppingCartItems = {}; }
-    // const { shoppingCart } = this.state;
-    const { id, title } = obj;
+    const { id, title, price } = obj;
     if (!shoppingCartItems[id]) {
-      shoppingCartItems[id] = { quantity: 1, title };
+      shoppingCartItems[id] = { quantity: 1, title, id, price };
     } else {
       shoppingCartItems[id].quantity += 1;
     }
@@ -84,7 +83,6 @@ class Home extends Component {
           detailsRedirect && <Redirect
             to={ {
               pathname: '/productdetail',
-              // state: { id: '123' },
             } }
           />
         }
@@ -96,7 +94,6 @@ class Home extends Component {
         />
         <button onClick={ this.handleClick } data-testid="query-button" type="button">
           Pesquisar
-          countShoppingCartItens
         </button>
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
