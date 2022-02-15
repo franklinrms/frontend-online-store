@@ -102,9 +102,9 @@ class ProductDetail extends Component {
     let shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
     if (shoppingCartItems === null) { shoppingCartItems = {}; }
     const { match: { params: { id } } } = this.props; // Refatorada após merge
-    const { title } = this.state; // Refatora após merge
+    const { title, price } = this.state; // Refatora após merge
     if (!shoppingCartItems[id]) {
-      shoppingCartItems[id] = { quantity: 1, title };
+      shoppingCartItems[id] = { quantity: 1, title, id, price };
     } else {
       shoppingCartItems[id].quantity += 1;
     }
