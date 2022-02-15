@@ -24,14 +24,15 @@ class ProductDetail extends Component {
       thumbnail: '',
       attributes: [],
       price: '',
+      shipping: {},
     };
   }
 
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
     const productDetails = await getProductsDetails(id);
-    const { title, thumbnail, attributes, price } = productDetails;
-    this.setState({ title, thumbnail, attributes, price });
+    const { title, thumbnail, attributes, price, shipping } = productDetails;
+    this.setState({ title, thumbnail, attributes, price, shipping });
     const itensReviewStorage = JSON.parse(localStorage.getItem(id));
 
     if (itensReviewStorage !== null) {
@@ -157,11 +158,13 @@ class ProductDetail extends Component {
       thumbnail,
       attributes,
       price,
+      shipping,
     } = this.state;
 
     return (
       <div data-testid="product-detail-name">
         <h2>{ title }</h2>
+        {shipping.free_shipping && <p data-testid="free-shipping">Frete Grátis</p>}
         <p>{ price }</p>
         <img src={ thumbnail } alt={ title } />
         <ul>

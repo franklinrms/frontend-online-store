@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 
 class Card extends Component {
   render() {
-    const { title, price, thumbnail, addToCart, id } = this.props;
+    const { title, price, thumbnail, addToCart, id, shipping } = this.props;
+
     return (
       <div data-testid="product">
         <h2>{ title }</h2>
+        {shipping.free_shipping && <p data-testid="free-shipping">Frete Grátis</p>}
         <img src={ thumbnail } alt={ title } />
         <p>{ price }</p>
         <Link
