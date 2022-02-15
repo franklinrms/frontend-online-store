@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductsDetails } from '../services/api';
+import ButtonShoppingCart from '../components/ButtonShoppingCart';
+import Review from '../components/Review';
 
 class ProductDetail extends Component {
   constructor() {
@@ -95,6 +97,19 @@ class ProductDetail extends Component {
     }
   }
 
+  addToCart2 = () => {
+    let shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
+    if (shoppingCartItems === null) { shoppingCartItems = {}; }
+    const { match: { params: { id } } } = this.props; // Refatorada após merge
+    const { title } = this.state; // Refatora após merge
+    if (!shoppingCartItems[id]) {
+      shoppingCartItems[id] = { quantity: 1, title };
+    } else {
+      shoppingCartItems[id].quantity += 1;
+    }
+    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCartItems));
+  }
+
   reviewClickButton() {
     const { match: { params: { id } } } = this.props;
 
@@ -103,7 +118,7 @@ class ProductDetail extends Component {
       itemReviewDescription } = this.state;
 
     if (itemReviewStar === 0 || itemReviewEmail === '') {
-      return alert('Preença os campos obrigatórios');
+      return alert('Preencha todos os campos obrigatórios!');
     }
 
     const itemReview = {
@@ -156,69 +171,18 @@ class ProductDetail extends Component {
               {`${attribute.name}: ${attribute.value_name}`}
             </li>))}
         </ul>
-        <section>
-          <p>Avaliações</p>
-          <input
-            type="email"
-            onChange={ this.onChangeEmailTextarea }
-            data-testid="product-detail-email"
-            placeholder="Email"
-            value={ itemReviewEmail }
-            name="itemReviewEmail"
-            required
-          />
-          <input
-            id="one"
-            data-testid="1-rating"
-            type="checkbox"
-            checked={ checkedOne }
-            onChange={ this.onChangeCheckbox }
-          />
-          <input
-            id="two"
-            data-testid="2-rating"
-            type="checkbox"
-            checked={ checkedTwo }
-            onChange={ this.onChangeCheckbox }
-          />
-          <input
-            id="thee"
-            data-testid="3-rating"
-            type="checkbox"
-            checked={ checkedThee }
-            onChange={ this.onChangeCheckbox }
-          />
-          <input
-            id="four"
-            data-testid="4-rating"
-            type="checkbox"
-            checked={ checkedFour }
-            onChange={ this.onChangeCheckbox }
-          />
-          <input
-            id="five"
-            data-testid="5-rating"
-            type="checkbox"
-            checked={ checkedFive }
-            onChange={ this.onChangeCheckbox }
-          />
-          <br />
-          <textarea
-            data-testid="product-detail-evaluation"
-            placeholder="Mensagem (opcional)"
-            value={ itemReviewDescription }
-            onChange={ this.onChangeEmailTextarea }
-            name="itemReviewDescription"
-          />
-          <br />
-          <button
-            data-testid="submit-review-btn"
-            type="button"
-            onClick={ this.reviewClickButton }
-          >
-            Avaliar
-          </button>
-        </section>
+        <Review
+          itemReviewEmail={ itemReviewEmail }
+          itemReviewDescription={ itemReviewDescription }
+          onChangeEmailTextarea={ this.onChangeEmailTextarea }
+          onChangeCheckbox={ this.onChangeCheckbox }
+          reviewClickButton={ this.reviewClickButton }
+          checkedOne={ checkedOne }
+          checkedTwo={ checkedTwo }
+          checkedThee={ checkedThee }
+          checkedFour={ checkedFour }
+          checkedFive={ checkedFive }
+        />
         <section>
           {itensReview.map((itenReview, index) => (
             <div key={ index }>
@@ -227,6 +191,14 @@ class ProductDetail extends Component {
               <p>{itenReview.description}</p>
             </div>))}
         </section>
+        <button
+          data-testid="product-detail-add-to-cart"
+          onClick={ this.addToCart2 }
+          type="button"
+        >
+          Adicionar ao carrinho
+        </button>
+        <ButtonShoppingCart />
       </div>
     );
   }
