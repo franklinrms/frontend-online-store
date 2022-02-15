@@ -12,9 +12,11 @@ class Home extends Component {
     selectedId: '',
     productsItems: [],
     shoppingCart: [],
+    totalItens: 0,
   }
 
   async componentDidMount() {
+    this.totalItems(); // Requisito 13
     const categories = await getCategories();
     const shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
     const categoriesMenu = categories.map((categorie) => (
@@ -41,6 +43,7 @@ class Home extends Component {
       shoppingCartItems[id].quantity += 1;
     }
     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCartItems));
+    this.totalItems(); // Requisito 13
   }
 
   handleRadio = async ({ target: { id } }) => {
@@ -75,8 +78,20 @@ class Home extends Component {
     }), () => this.countShoppingCartItens(obj));
   }
 
+  totalItems = () => {
+    let shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
+    if (shoppingCartItems === null) { shoppingCartItems = {}; }
+    const totalLocalStorage = Object.values(shoppingCartItems)
+      .reduce((acc, item) => acc + item.quantity, 0);
+    this.setState({ totalItens: totalLocalStorage });
+  }
+
   render() {
-    const { categories, inputValue, productsItems, detailsRedirect } = this.state;
+    const { categories,
+      inputValue,
+      productsItems,
+      detailsRedirect,
+      totalItens } = this.state;
     return (
       <div>
         {
@@ -99,7 +114,7 @@ class Home extends Component {
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
         <Categories categories={ categories } />
-        <ButtonShoppingCart />
+        <ButtonShoppingCart total={ totalItens } />
         { productsItems }
       </div>
     );

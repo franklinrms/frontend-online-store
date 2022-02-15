@@ -25,10 +25,12 @@ class ProductDetail extends Component {
       attributes: [],
       price: '',
       shipping: {},
+      totalItens: 0,
     };
   }
 
   async componentDidMount() {
+    this.totalItems(); // Requisito 13
     const { match: { params: { id } } } = this.props;
     const productDetails = await getProductsDetails(id);
     const { title, thumbnail, attributes, price, shipping } = productDetails;
@@ -98,6 +100,15 @@ class ProductDetail extends Component {
     }
   }
 
+  // Requisito 13:
+  totalItems = () => {
+    let shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
+    if (shoppingCartItems === null) { shoppingCartItems = {}; }
+    const totalLocalStorage = Object.values(shoppingCartItems)
+      .reduce((acc, item) => acc + item.quantity, 0);
+    this.setState({ totalItens: totalLocalStorage });
+  }
+
   addToCart2 = () => {
     let shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
     if (shoppingCartItems === null) { shoppingCartItems = {}; }
@@ -109,6 +120,7 @@ class ProductDetail extends Component {
       shoppingCartItems[id].quantity += 1;
     }
     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCartItems));
+    this.totalItems(); // Requisito 13
   }
 
   reviewClickButton() {
@@ -159,6 +171,7 @@ class ProductDetail extends Component {
       attributes,
       price,
       shipping,
+      totalItens,
     } = this.state;
 
     return (
@@ -174,6 +187,7 @@ class ProductDetail extends Component {
               {`${attribute.name}: ${attribute.value_name}`}
             </li>))}
         </ul>
+        <ButtonShoppingCart total={ totalItens } />
         <Review
           itemReviewEmail={ itemReviewEmail }
           itemReviewDescription={ itemReviewDescription }
@@ -201,7 +215,6 @@ class ProductDetail extends Component {
         >
           Adicionar ao carrinho
         </button>
-        <ButtonShoppingCart />
       </div>
     );
   }
