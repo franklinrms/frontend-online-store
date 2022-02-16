@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductsDetails } from '../services/api';
+import verifyStars from '../services/verifyStars';
 import ButtonShoppingCart from '../components/ButtonShoppingCart';
 import Review from '../components/Review';
 
@@ -26,6 +27,8 @@ class ProductDetail extends Component {
       price: '',
       shipping: {},
       totalItens: 0,
+      emptyStorage: false,
+      availableQuantity: 0,
     };
   }
 
@@ -34,13 +37,23 @@ class ProductDetail extends Component {
     const { match: { params: { id } } } = this.props;
     const productDetails = await getProductsDetails(id);
     const { title, thumbnail, attributes, price, shipping } = productDetails;
-    this.setState({ title, thumbnail, attributes, price, shipping });
+    const availableQuantity = productDetails.available_quantity;
+    this.setState({ title, thumbnail, attributes, price, shipping, availableQuantity });
     const itensReviewStorage = JSON.parse(localStorage.getItem(id));
 
     if (itensReviewStorage !== null) {
       this.setState((prevState) => ({
         itensReview: [...prevState.itensReview, ...itensReviewStorage] }));
     }
+
+    let emptyStorage = JSON.parse(localStorage.getItem('emptyStorage')); // Requisito 14
+    if (emptyStorage === null) { // Requisito 14
+      emptyStorage = false;
+    } else {
+      emptyStorage = emptyStorage.find((item) => item === id);
+    }
+
+    this.setState({ emptyStorage }); // Requisito 14
   }
 
   onChangeEmailTextarea({ target }) {
@@ -52,52 +65,15 @@ class ProductDetail extends Component {
   onChangeCheckbox({ target }) {
     const checkboxId = target.id;
 
-    if (checkboxId === 'one') {
-      this.setState({
-        checkedOne: true,
-        checkedTwo: false,
-        checkedThee: false,
-        checkedFour: false,
-        checkedFive: false,
-        itemReviewStar: 1,
-      });
-    } else if (checkboxId === 'two') {
-      this.setState({
-        checkedOne: true,
-        checkedTwo: true,
-        checkedThee: false,
-        checkedFour: false,
-        checkedFive: false,
-        itemReviewStar: 2,
-      });
-    } else if (checkboxId === 'thee') {
-      this.setState({
-        checkedOne: true,
-        checkedTwo: true,
-        checkedThee: true,
-        checkedFour: false,
-        checkedFive: false,
-        itemReviewStar: 3,
-      });
-    } else if (checkboxId === 'four') {
-      this.setState({
-        checkedOne: true,
-        checkedTwo: true,
-        checkedThee: true,
-        checkedFour: true,
-        checkedFive: false,
-        itemReviewStar: 4,
-      });
-    } else {
-      this.setState({
-        checkedOne: true,
-        checkedTwo: true,
-        checkedThee: true,
-        checkedFour: true,
-        checkedFive: true,
-        itemReviewStar: 5,
-      });
-    }
+    const stars = verifyStars(checkboxId);
+    this.setState({
+      checkedOne: stars.checkedOne,
+      checkedTwo: stars.checkedTwo,
+      checkedThee: stars.checkedThee,
+      checkedFour: stars.checkedFour,
+      checkedFive: stars.checkedFive,
+      itemReviewStar: stars.itemReviewStar,
+    });
   }
 
   // Requisito 13:
@@ -113,14 +89,35 @@ class ProductDetail extends Component {
     let shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
     if (shoppingCartItems === null) { shoppingCartItems = {}; }
     const { match: { params: { id } } } = this.props;
-    const { title, price } = this.state;
+    const { title, price, availableQuantity } = this.state;
     if (!shoppingCartItems[id]) {
-      shoppingCartItems[id] = { quantity: 1, title, id, price };
+      shoppingCartItems[id] = { quantity: 1, title, id, price, availableQuantity };
     } else {
       shoppingCartItems[id].quantity += 1;
     }
     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCartItems));
     this.totalItems(); // Requisito 13
+    this.checkQuantity(id); // Requisito 14
+  }
+
+  // Requisito 14
+  checkQuantity = (id) => {
+    const { availableQuantity } = this.state;
+    const shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
+    const cartQuantity = shoppingCartItems[id].quantity;
+
+    const setEmptyStorageLocalStorage = () => {
+      let emptyStorageOld = JSON.parse(localStorage.getItem('emptyStorage'));
+      if (emptyStorageOld === null) { emptyStorageOld = []; }
+      const emptyStorageNew = [...emptyStorageOld, id];
+      localStorage.setItem('emptyStorage', JSON.stringify(emptyStorageNew));
+    };
+
+    if (cartQuantity === availableQuantity) {
+      this.setState(() => ({
+        emptyStorage: true }),
+      setEmptyStorageLocalStorage);
+    }
   }
 
   reviewClickButton() {
@@ -172,6 +169,8 @@ class ProductDetail extends Component {
       price,
       shipping,
       totalItens,
+      emptyStorage,
+      availableQuantity,
     } = this.state;
 
     return (
@@ -179,6 +178,7 @@ class ProductDetail extends Component {
         <h2>{ title }</h2>
         {shipping.free_shipping && <p data-testid="free-shipping">Frete Grátis</p>}
         <p>{ price }</p>
+        <p>{`Quantidade: ${availableQuantity}`}</p>
         <img src={ thumbnail } alt={ title } />
         <ul>
           {attributes.map((attribute) => (
@@ -211,6 +211,7 @@ class ProductDetail extends Component {
         <button
           data-testid="product-detail-add-to-cart"
           onClick={ this.addToCart2 }
+          disabled={ emptyStorage }
           type="button"
         >
           Adicionar ao carrinho

@@ -15,7 +15,7 @@ class CartItem extends React.Component {
     const itemInformation = JSON.parse(localStorage.getItem('shoppingCart'));
     const item = Object.values(itemInformation).find(({ id }) => id === target.id);
     let quant = item.quantity;
-    if (name === 'add') {
+    if (name === 'add' && quant < item.availableQuantity) {
       quant += 1;
     }
     if (name === 'remove' && quant > 0) {

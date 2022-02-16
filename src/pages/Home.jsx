@@ -13,6 +13,7 @@ class Home extends Component {
     productsItems: [],
     shoppingCart: [],
     totalItens: 0,
+    emptyStorage: [],
   }
 
   async componentDidMount() {
@@ -29,21 +30,27 @@ class Home extends Component {
           onChange={ this.handleRadio }
         />
       </label>));
-
-    this.setState({ categories: categoriesMenu, shoppingCart: shoppingCartItems });
+    let emptyStorage = JSON.parse(localStorage.getItem('emptyStorage')); // Requisito 14
+    if (emptyStorage === null) { emptyStorage = []; } // Requisito 14
+    this.setState({
+      categories: categoriesMenu,
+      shoppingCart: shoppingCartItems,
+      emptyStorage });
   }
 
   countShoppingCartItens = (obj) => {
     let shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
     if (shoppingCartItems === null) { shoppingCartItems = {}; }
     const { id, title, price } = obj;
+    const availableQuantity = obj.available_quantity;
     if (!shoppingCartItems[id]) {
-      shoppingCartItems[id] = { quantity: 1, title, id, price };
+      shoppingCartItems[id] = { quantity: 1, title, id, price, availableQuantity };
     } else {
       shoppingCartItems[id].quantity += 1;
     }
     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCartItems));
     this.totalItems(); // Requisito 13
+    this.checkQuantity(obj); // Requisito 14
   }
 
   handleRadio = async ({ target: { id } }) => {
@@ -53,14 +60,7 @@ class Home extends Component {
 
   filterResults = async (productId, inputValue) => {
     const products = await getProductsFromCategoryAndQuery(productId, inputValue);
-
-    const productsItems = products.results.map((product) => (
-      <Card
-        key={ product.id }
-        { ...product }
-        addToCart={ this.addToCart }
-      />));
-    this.setState({ productsItems });
+    this.setState({ productsItems: products.results });
   }
 
   handleClick = async () => {
@@ -70,6 +70,24 @@ class Home extends Component {
 
   handleChange = ({ target: { value } }) => {
     this.setState({ inputValue: value });
+  }
+
+  // Requisito 14
+  checkQuantity = (obj) => {
+    const { id } = obj;
+    const shoppingCartItems = JSON.parse(localStorage.getItem('shoppingCart'));
+    const cartQuantity = shoppingCartItems[id].quantity;
+
+    const setEmptyStorageLocalStorage = () => {
+      const { emptyStorage } = this.state;
+      localStorage.setItem('emptyStorage', JSON.stringify(emptyStorage));
+    };
+
+    if (cartQuantity === obj.available_quantity) {
+      this.setState((prevState) => ({
+        emptyStorage: [...prevState.emptyStorage, id] }),
+      setEmptyStorageLocalStorage);
+    }
   }
 
   addToCart = (obj) => {
@@ -91,7 +109,8 @@ class Home extends Component {
       inputValue,
       productsItems,
       detailsRedirect,
-      totalItens } = this.state;
+      totalItens,
+      emptyStorage } = this.state;
     return (
       <div>
         {
@@ -115,7 +134,14 @@ class Home extends Component {
         </p>
         <Categories categories={ categories } />
         <ButtonShoppingCart total={ totalItens } />
-        { productsItems }
+        {productsItems.map((product) => (
+          <Card
+            key={ product.id }
+            { ...product }
+            availableQuantity={ product.available_quantity }
+            addToCart={ this.addToCart }
+            emptyStorage={ emptyStorage }
+          />))}
       </div>
     );
   }
