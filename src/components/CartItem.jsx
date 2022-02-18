@@ -3,11 +3,26 @@ import React from 'react';
 class CartItem extends React.Component {
   state = {
     update: '',
+    totalSum: 0,
+  }
+
+  componentDidMount() {
+    this.totalSum();
   }
 
   componentDidUpdate(prevState) {
     const { update } = this.state;
     if (update !== prevState) return true;
+  }
+
+  totalSum = () => {
+    let itemInformation = JSON.parse(localStorage.getItem('shoppingCart'));
+    if (itemInformation === null) { itemInformation = {}; }
+    let total = 0;
+    Object.values(itemInformation).forEach((item) => {
+      total += item.price * item.quantity;
+    });
+    this.setState({ totalSum: total });
   }
 
   handleAdd = ({ target }) => {
@@ -28,10 +43,13 @@ class CartItem extends React.Component {
     itemInformation[item.id] = { ...item };
     this.setState({ update: itemInformation });
     localStorage.setItem('shoppingCart', JSON.stringify(itemInformation));
+    this.totalSum();
   };
 
   render() {
-    const itemInformation = JSON.parse(localStorage.getItem('shoppingCart'));
+    const { totalSum } = this.state;
+    let itemInformation = JSON.parse(localStorage.getItem('shoppingCart'));
+    if (itemInformation === null) { itemInformation = {}; }
     return (
       <div>
         {Object.values(itemInformation).map((item) => (
@@ -64,6 +82,7 @@ class CartItem extends React.Component {
             </h3>
           </div>
         ))}
+        <p>{`Total: R$ ${totalSum} `}</p>
       </div>
     );
   }
