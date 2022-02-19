@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import styled from 'styled-components';
 import CartItem from '../components/CartItem';
+
+const ButtonCheckout = styled.button`
+  width: 134px;
+  height: 45px;
+  background: #222;
+  color: #fff;
+  border-radius: 6px;
+  margin-top: 50px;
+  margin-left: 23%;
+  cursor: pointer;
+`;
 
 class ShoppingCart extends Component {
   state = {
@@ -21,13 +33,13 @@ class ShoppingCart extends Component {
         {itemInformation ? (
           <div>
             <CartItem />
-            <button
+            <ButtonCheckout
               type="button"
               data-testid="checkout-products"
               onClick={ this.redirectCheckout }
             >
               Finalizar a Compra
-            </button>
+            </ButtonCheckout>
           </div>
         ) : (
           <p data-testid="shopping-cart-empty-message">

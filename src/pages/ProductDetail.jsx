@@ -175,19 +175,26 @@ class ProductDetail extends Component {
 
     return (
       <div data-testid="product-detail-name">
-        <h2>{ title }</h2>
-        {shipping.free_shipping && <p data-testid="free-shipping">Frete Grátis</p>}
-        <p>{ price }</p>
-        <p>{`Quantidade: ${availableQuantity}`}</p>
-        <img src={ thumbnail } alt={ title } />
-        <ul>
-          {attributes.map((attribute) => (
-
-            <li key={ attribute.id }>
-              {`${attribute.name}: ${attribute.value_name}`}
-            </li>))}
-        </ul>
         <ButtonShoppingCart total={ totalItens } />
+        <div>
+          <h2>{title}</h2>
+          <h2>{`R$  ${price}`}</h2>
+          <img src={ thumbnail } alt={ title } />
+
+        </div>
+        <div>
+          {shipping.free_shipping && <p data-testid="free-shipping">Frete Grátis</p>}
+          <p>{`Quantidade disponível: ${availableQuantity}`}</p>
+          <ul>
+            {attributes.map((attribute) => (
+
+              <li key={ attribute.id }>
+                {`${attribute.name}: ${attribute.value_name}`}
+              </li>))}
+          </ul>
+
+        </div>
+
         <Review
           itemReviewEmail={ itemReviewEmail }
           itemReviewDescription={ itemReviewDescription }

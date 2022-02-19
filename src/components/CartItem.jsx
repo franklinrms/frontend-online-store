@@ -1,4 +1,56 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Conteiner = styled.main`
+  /* height: 70vh; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const ConteinerItem = styled.div`
+  height: 50px;
+  display: flex;
+  align-items: center;
+  /* border-top: 1px solid #222; */
+  margin-top: 15px;
+  margin-left: 50px;
+`;
+const ConteinerQunt = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 10%;
+  margin-left: 35px;
+  margin-right: 35px;
+`;
+const ConteinerTitle = styled.div`
+  display: flex;
+  width: 30%;
+`;
+const ButtonQunt = styled.button`
+  background: #fff;
+  color: #222;
+  border: none;
+  font-weight: bold;
+  font-size: 30px;
+  padding: 3px;
+  cursor: pointer;
+`;
+const Qunt = styled.p`
+  display: flex;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  border: 1px solid #222;
+  border-radius: 6px;
+  padding: 10px;
+`;
+const Total = styled.p`
+  font-size: 30px;
+  margin-top: 30px;
+  margin-left: 50px;
+`;
 
 class CartItem extends React.Component {
   state = {
@@ -51,39 +103,40 @@ class CartItem extends React.Component {
     let itemInformation = JSON.parse(localStorage.getItem('shoppingCart'));
     if (itemInformation === null) { itemInformation = {}; }
     return (
-      <div>
+      <Conteiner>
         {Object.values(itemInformation).map((item) => (
-          <div
+          <ConteinerItem
             key={ item.title }
           >
-            <h3 data-testid="shopping-cart-product-name">{item.title}</h3>
-            <p data-testid="shopping-cart-product-quantity">{item.quantity}</p>
-            <button
-              onClick={ this.handleAdd }
-              data-testid="product-increase-quantity"
-              type="button"
-              id={ item.id }
-              name="add"
-            >
-              +
-            </button>
-            <button
-              onClick={ this.handleAdd }
-              id={ item.id }
-              name="remove"
-              data-testid="product-decrease-quantity"
-              type="button"
-            >
-              -
-            </button>
-            <h3>
-              R$
-              { item.price * item.quantity }
-            </h3>
-          </div>
+            <ConteinerTitle>
+              <h3 data-testid="shopping-cart-product-name">{item.title}</h3>
+            </ConteinerTitle>
+            <ConteinerQunt>
+              <ButtonQunt
+                onClick={ this.handleAdd }
+                id={ item.id }
+                name="remove"
+                data-testid="product-decrease-quantity"
+                type="button"
+              >
+                -
+              </ButtonQunt>
+              <Qunt data-testid="shopping-cart-product-quantity">{item.quantity}</Qunt>
+              <ButtonQunt
+                onClick={ this.handleAdd }
+                data-testid="product-increase-quantity"
+                type="button"
+                id={ item.id }
+                name="add"
+              >
+                +
+              </ButtonQunt>
+            </ConteinerQunt>
+            <h3>{`R$ ${item.price * item.quantity}`}</h3>
+          </ConteinerItem>
         ))}
-        <p>{`Total: R$ ${totalSum} `}</p>
-      </div>
+        <Total>{`Total: R$ ${totalSum} `}</Total>
+      </Conteiner>
     );
   }
 }
