@@ -49,6 +49,7 @@ const InitialMessage = styled.h2`
   justify-content: center;
   font-size: 35 px;
   margin-top: 50px;
+  opacity:  ${(props) => (props.search !== '' || props.select !== '' ? 0 : 1)} ;
 `;
 const Label = styled.label`
   font-size: 20px;
@@ -165,7 +166,8 @@ class Home extends Component {
       productsItems,
       detailsRedirect,
       totalItens,
-      emptyStorage } = this.state;
+      emptyStorage,
+      selectedId } = this.state;
     return (
       <ConteinerMain>
         {
@@ -188,7 +190,11 @@ class Home extends Component {
           </Button>
           <ButtonShoppingCart total={ totalItens } />
         </ContainerSearch>
-        <InitialMessage data-testid="home-initial-message">
+        <InitialMessage
+          data-testid="home-initial-message"
+          search={ inputValue }
+          select={ selectedId }
+        >
           Digite algum termo de pesquisa ou escolha uma categoria.
         </InitialMessage>
         <Conteiner>

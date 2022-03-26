@@ -43,12 +43,12 @@ display: flex;
 margin-left: 50px;
 `;
 const Inputs = styled.input`
-padding: 12px 16px;
-height: 20px;
-background: #f5f5f5;
-border: 1px solid #3D495C;
-border-radius: 6px;
-margin: 5px;
+  padding: 12px 16px;
+  height: 20px;
+  background: #f5f5f5;
+  border: 1px solid #3D495C;
+  border-radius: 6px;
+  margin: 5px;
 `;
 const Icons = styled.img`
 width: 90px;

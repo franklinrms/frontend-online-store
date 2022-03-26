@@ -4,6 +4,7 @@ import { getProductsDetails } from '../services/api';
 import verifyStars from '../services/verifyStars';
 import ButtonShoppingCart from '../components/ButtonShoppingCart';
 import Review from '../components/Review';
+import { Main, Details } from '../style';
 
 class ProductDetail extends Component {
   constructor() {
@@ -176,53 +177,55 @@ class ProductDetail extends Component {
     return (
       <div data-testid="product-detail-name">
         <ButtonShoppingCart total={ totalItens } />
-        <div>
-          <h2>{title}</h2>
-          <h2>{`R$  ${price}`}</h2>
-          <img src={ thumbnail } alt={ title } />
+        <Main>
+          <div>
+            <h2>{title}</h2>
+            <h2>{`R$  ${price}`}</h2>
+          </div>
+          <Details>
+            <img src={ thumbnail } alt={ title } />
+            <div>
+              {shipping.free_shipping && <p data-testid="free-shipping">Frete Grátis</p>}
+              <p>{`Quantidade disponível: ${availableQuantity}`}</p>
+              <ul>
+                {attributes.map((attribute) => (
 
-        </div>
-        <div>
-          {shipping.free_shipping && <p data-testid="free-shipping">Frete Grátis</p>}
-          <p>{`Quantidade disponível: ${availableQuantity}`}</p>
-          <ul>
-            {attributes.map((attribute) => (
+                  <li key={ attribute.id }>
+                    {`${attribute.name}: ${attribute.value_name}`}
+                  </li>))}
+              </ul>
+            </div>
+          </Details>
 
-              <li key={ attribute.id }>
-                {`${attribute.name}: ${attribute.value_name}`}
-              </li>))}
-          </ul>
-
-        </div>
-
-        <Review
-          itemReviewEmail={ itemReviewEmail }
-          itemReviewDescription={ itemReviewDescription }
-          onChangeEmailTextarea={ this.onChangeEmailTextarea }
-          onChangeCheckbox={ this.onChangeCheckbox }
-          reviewClickButton={ this.reviewClickButton }
-          checkedOne={ checkedOne }
-          checkedTwo={ checkedTwo }
-          checkedThee={ checkedThee }
-          checkedFour={ checkedFour }
-          checkedFive={ checkedFive }
-        />
-        <section>
-          {itensReview.map((itenReview, index) => (
-            <div key={ index }>
-              <p>{itenReview.email}</p>
-              <p>{itenReview.stars}</p>
-              <p>{itenReview.description}</p>
-            </div>))}
-        </section>
-        <button
-          data-testid="product-detail-add-to-cart"
-          onClick={ this.addToCart2 }
-          disabled={ emptyStorage }
-          type="button"
-        >
-          Adicionar ao carrinho
-        </button>
+          <Review
+            itemReviewEmail={ itemReviewEmail }
+            itemReviewDescription={ itemReviewDescription }
+            onChangeEmailTextarea={ this.onChangeEmailTextarea }
+            onChangeCheckbox={ this.onChangeCheckbox }
+            reviewClickButton={ this.reviewClickButton }
+            checkedOne={ checkedOne }
+            checkedTwo={ checkedTwo }
+            checkedThee={ checkedThee }
+            checkedFour={ checkedFour }
+            checkedFive={ checkedFive }
+          />
+          <section>
+            {itensReview.map((itenReview, index) => (
+              <div key={ index }>
+                <p>{itenReview.email}</p>
+                <p>{itenReview.stars}</p>
+                <p>{itenReview.description}</p>
+              </div>))}
+          </section>
+          <button
+            data-testid="product-detail-add-to-cart"
+            onClick={ this.addToCart2 }
+            disabled={ emptyStorage }
+            type="button"
+          >
+            Adicionar ao carrinho
+          </button>
+        </Main>
       </div>
     );
   }

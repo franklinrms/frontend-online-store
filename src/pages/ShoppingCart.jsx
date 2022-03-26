@@ -3,6 +3,13 @@ import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import styled from 'styled-components';
 import CartItem from '../components/CartItem';
 
+const Conteiner = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  margin-left: 25%;
+`;
 const ButtonCheckout = styled.button`
   width: 134px;
   height: 45px;
@@ -28,7 +35,7 @@ class ShoppingCart extends Component {
     const { redirect } = this.state;
     const itemInformation = JSON.parse(localStorage.getItem('shoppingCart'));
     return (
-      <div>
+      <Conteiner>
         {redirect && <Redirect to={ { pathname: '/checkout' } } /> }
         {itemInformation ? (
           <div>
@@ -46,7 +53,7 @@ class ShoppingCart extends Component {
             Seu carrinho está vazio
           </p>
         )}
-      </div>
+      </Conteiner>
     );
   }
 }
