@@ -1,0 +1,89 @@
+[debug] [2022-03-26T13:16:34.946Z] ----------------------------------------------------------------------
+[debug] [2022-03-26T13:16:34.947Z] Command:       /home/franklin/.nvm/versions/node/v14.19.1/bin/node /home/franklin/.nvm/versions/node/v14.19.1/bin/firebase init
+[debug] [2022-03-26T13:16:34.947Z] CLI Version:   10.5.0
+[debug] [2022-03-26T13:16:34.947Z] Platform:      linux
+[debug] [2022-03-26T13:16:34.948Z] Node Version:  v14.19.1
+[debug] [2022-03-26T13:16:34.948Z] Time:          Sat Mar 26 2022 10:16:34 GMT-0300 (Brasilia Standard Time)
+[debug] [2022-03-26T13:16:34.948Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-03-26T13:16:34.995Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-03-26T13:16:34.995Z] > authorizing via signed-in user (thefx97@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /home/franklin/Trybe/projetos/modulo-2-front-end/sd-018-a-project-frontend-online-store
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2022-03-26T13:16:45.125Z] Using project from CLI flag: frontend-online-store
+[debug] [2022-03-26T13:16:45.129Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/frontend-online-store [none]
+[debug] [2022-03-26T13:16:46.508Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/frontend-online-store 200
+[debug] [2022-03-26T13:16:46.509Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/frontend-online-store {"projectId":"frontend-online-store","projectNumber":"87213924326","displayName":"frontend-online-store","name":"projects/frontend-online-store","resources":{"hostingSite":"frontend-online-store"},"state":"ACTIVE"}
+[info] i  Using project frontend-online-store (frontend-online-store) 
+[info] 
+=== Hosting:github Setup
+[info] 
+[info] i  Detected a .git folder at /home/franklin/Trybe/projetos/modulo-2-front-end/sd-018-a-project-frontend-online-store 
+[info] i  Authorizing with GitHub to upload your service account to a GitHub repository's secrets store. 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://github.com/login/oauth/authorize?client_id=89cf50f02ac6aaed3484&state=1031859429&redirect_uri=http%3A%2F%2Flocalhost%3A9005&scope=read%3Auser%20repo%20public_repo
+[info] 
+[info] Waiting for authentication...
+[debug] [2022-03-26T13:16:52.382Z] >>> HTTP REQUEST POST https://github.com/login/oauth/access_token  
+ {"client_id":"89cf50f02ac6aaed3484","client_secret":"3330d14abc895d9a74d5f17cd7a00711fa2c5bf0","code":"02a76bfaf5e36e40c14b","redirect_uri":"http://localhost:9005","state":"1031859429"}
+[debug] [2022-03-26T13:16:53.252Z] <<< HTTP RESPONSE 200 {"server":"GitHub.com","date":"Sat, 26 Mar 2022 13:16:52 GMT","content-type":"application/json; charset=utf-8","transfer-encoding":"chunked","vary":"X-PJAX, X-PJAX-Container, Accept-Encoding, Accept, X-Requested-With","permissions-policy":"interest-cohort=()","etag":"W/\"c2fe80d901e59ba064c2829d421e7410\"","cache-control":"max-age=0, private, must-revalidate","strict-transport-security":"max-age=31536000; includeSubdomains; preload","x-frame-options":"deny","x-content-type-options":"nosniff","x-xss-protection":"0","referrer-policy":"origin-when-cross-origin, strict-origin-when-cross-origin","expect-ct":"max-age=2592000, report-uri=\"https://api.github.com/_private/browser/errors\"","content-security-policy":"default-src 'none'; base-uri 'self'; block-all-mixed-content; child-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com objects-origin.githubusercontent.com www.githubstatus.com collector.githubapp.com collector.github.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com cdn.optimizely.com logx.optimizely.com/v1/events translator.github.com wss://alive.github.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src render.githubusercontent.com viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: github.githubassets.com identicons.github.com collector.githubapp.com collector.github.com github-cloud.s3.amazonaws.com secured-user-images.githubusercontent.com/ *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com/; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; worker-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/","x-github-request-id":"A550:61BA:53ED45:94D56C:623F1244"}
+[debug] [2022-03-26T13:16:53.266Z] >>> [apiv2][query] GET https://api.github.com/user [none]
+[debug] [2022-03-26T13:16:53.923Z] <<< [apiv2][status] GET https://api.github.com/user 200
+[debug] [2022-03-26T13:16:53.924Z] <<< [apiv2][body] GET https://api.github.com/user {"login":"franklinrms","id":88167195,"node_id":"MDQ6VXNlcjg4MTY3MTk1","avatar_url":"https://avatars.githubusercontent.com/u/88167195?v=4","gravatar_id":"","url":"https://api.github.com/users/franklinrms","html_url":"https://github.com/franklinrms","followers_url":"https://api.github.com/users/franklinrms/followers","following_url":"https://api.github.com/users/franklinrms/following{/other_user}","gists_url":"https://api.github.com/users/franklinrms/gists{/gist_id}","starred_url":"https://api.github.com/users/franklinrms/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/franklinrms/subscriptions","organizations_url":"https://api.github.com/users/franklinrms/orgs","repos_url":"https://api.github.com/users/franklinrms/repos","events_url":"https://api.github.com/users/franklinrms/events{/privacy}","received_events_url":"https://api.github.com/users/franklinrms/received_events","type":"User","site_admin":false,"name":"Franklin Ramos","company":null,"blog":"https://www.linkedin.com/in/franklinrms/","location":"Vitoria da Conquista","email":"franklinramos@outlook.com","hireable":null,"bio":null,"twitter_username":null,"public_repos":3,"public_gists":0,"followers":0,"following":2,"created_at":"2021-07-29T22:00:23Z","updated_at":"2022-02-14T23:17:06Z","private_gists":0,"total_private_repos":4,"owned_private_repos":1,"disk_usage":1377,"collaborators":0,"two_factor_authentication":false,"plan":{"name":"free","space":976562499,"collaborators":0,"private_repos":10000}}
+[info] 
+[info] ✔  Success! Logged into GitHub as franklinrms 
+[info] 
+[debug] [2022-03-26T13:17:30.378Z] >>> [apiv2][query] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key type=owner
+[debug] [2022-03-26T13:17:31.550Z] <<< [apiv2][status] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key 404
+[debug] [2022-03-26T13:17:31.551Z] <<< [apiv2][body] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest/reference/actions#get-a-repository-public-key"}
+[debug] [2022-03-26T13:18:49.578Z] >>> [apiv2][query] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key type=owner
+[debug] [2022-03-26T13:18:50.555Z] >>> [apiv2][query] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key type=owner
+[debug] [2022-03-26T13:18:50.734Z] <<< [apiv2][status] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key 404
+[debug] [2022-03-26T13:18:50.734Z] <<< [apiv2][body] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest/reference/actions#get-a-repository-public-key"}
+[debug] [2022-03-26T13:18:51.526Z] <<< [apiv2][status] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key 404
+[debug] [2022-03-26T13:18:51.526Z] <<< [apiv2][body] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest/reference/actions#get-a-repository-public-key"}
+[debug] [2022-03-26T13:19:01.468Z] >>> [apiv2][query] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key type=owner
+[debug] [2022-03-26T13:19:02.278Z] <<< [apiv2][status] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key 404
+[debug] [2022-03-26T13:19:02.278Z] <<< [apiv2][body] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest/reference/actions#get-a-repository-public-key"}
+[debug] [2022-03-26T13:19:03.516Z] >>> [apiv2][query] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key type=owner
+[debug] [2022-03-26T13:19:04.078Z] <<< [apiv2][status] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key 404
+[debug] [2022-03-26T13:19:04.078Z] <<< [apiv2][body] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest/reference/actions#get-a-repository-public-key"}
+[debug] [2022-03-26T13:19:07.315Z] >>> [apiv2][query] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key type=owner
+[debug] [2022-03-26T13:19:08.421Z] <<< [apiv2][status] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key 404
+[debug] [2022-03-26T13:19:08.422Z] <<< [apiv2][body] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest/reference/actions#get-a-repository-public-key"}
+[debug] [2022-03-26T13:19:12.661Z] >>> [apiv2][query] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key type=owner
+[debug] [2022-03-26T13:19:13.441Z] <<< [apiv2][status] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key 404
+[debug] [2022-03-26T13:19:13.442Z] <<< [apiv2][body] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest/reference/actions#get-a-repository-public-key"}
+[debug] [2022-03-26T13:19:35.713Z] >>> [apiv2][query] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key type=owner
+[debug] [2022-03-26T13:19:36.545Z] <<< [apiv2][status] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key 404
+[debug] [2022-03-26T13:19:36.546Z] <<< [apiv2][body] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest/reference/actions#get-a-repository-public-key"}
+[debug] [2022-03-26T13:19:38.340Z] >>> [apiv2][query] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store /actions/secrets/public-key type=owner
+[debug] [2022-03-26T13:19:38.937Z] <<< [apiv2][status] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store /actions/secrets/public-key 404
+[debug] [2022-03-26T13:19:38.938Z] <<< [apiv2][body] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store /actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest/reference/actions#get-a-repository-public-key"}
+[debug] [2022-03-26T13:19:39.541Z] >>> [apiv2][query] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store /actions/secrets/public-key type=owner
+[debug] [2022-03-26T13:19:40.166Z] <<< [apiv2][status] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store /actions/secrets/public-key 404
+[debug] [2022-03-26T13:19:40.167Z] <<< [apiv2][body] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store /actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest/reference/actions#get-a-repository-public-key"}
+[debug] [2022-03-26T13:19:40.667Z] >>> [apiv2][query] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store /actions/secrets/public-key type=owner
+[debug] [2022-03-26T13:19:41.515Z] <<< [apiv2][status] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store /actions/secrets/public-key 404
+[debug] [2022-03-26T13:19:41.515Z] <<< [apiv2][body] GET https://api.github.com/repos/tryber/sd-018-a-project-frontend-online-store /actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest/reference/actions#get-a-repository-public-key"}
